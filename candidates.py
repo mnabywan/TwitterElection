@@ -8,22 +8,31 @@ HOLOWNIA = "Holownia"
 CANDIDATES = [DUDA, KIDAWA, KOSINIAK, BIEDRON, BOSAK, HOLOWNIA]
 
 DUDA_ACCOUNTS = ['AndrzejDuda', 'AndrzejDuda2020', 'mecenasJTK', 'jbrudzinski', 'AdamBielan', 'pisorgpl']
-DUDA_HASHTAGS = ['#Duda2020', '#AndrzejDuda2020', '#PAD2020', '#JedziemyDalej', '#DobryCzasDlaPolski', '#PiS', '#Kaczynski']
+DUDA_HASHTAGS = ['#AndzejDuda2020', '#PAD2020', '#NiechŻyjePolska']
 
 KIDAWA_ACCOUNTS = ['M_K_Blonska', 'adamSzlapka', 'Arlukowicz', 'Platforma_org']
-KIDAWA_HASHTAGS = ['#Kidawa2020', '#KidawaTeam', '#MuremzaKidawą', '#PrawdziwaPrezydent',
-                   '#KoalicjaObywatelska', '#NowaPlatforma']
+KIDAWA_HASHTAGS = [ '#Kidawa2020', '#KidawaTeam', '#MuremzaKidawą', '#PrawdziwaPrezydent']
 
 BIEDRON_ACCOUNTS = ['RobertBiedron', 'poselTTrela', 'B_Maciejewska', '__Lewica']
-BIEDRON_HASHTAGS = ['#Biedron2020', '#Polska2020', '#StudioBiedron', '#Lewica']
+BIEDRON_HASHTAGS = ['#Biedron2020', '#Polska2020', '#StudioBiedron']
 
 KOSINIAK_ACCOUNTS = ['KosiniakKamysz', 'magdasobkowiak', 'DariuszKlimczak', 'nowePSL']
-KOSINIAK_HASHTAGS = ['#Kosiniak2020', '#NadziejaDlaPolski', '#PSL']
+KOSINIAK_HASHTAGS = ['#Kosiniak2020', '#NadziejaDlaPolski']
 
 
 BOSAK_ACCOUNTS = ['krzysztofbosak', 'Bosak2020', 'PUsiadek', 'annabrylka', 'Konfederacja_']
-BOSAK_HASHTAGS = ['#Bosak2020', '#PrezydentBosak',  '#NaprzódPolsko', '#Konfederacja']
+BOSAK_HASHTAGS = [ '#Bosak2020', '#PrezydentBosak', '#NaprzódPolsko']
 
 HOLOWNIA_ACCOUNTS = ['szymon_holownia', 'michalkobosko']
 HOLOWNIA_HASHTAGS = ['#Holownia2020', '#ekipaSzymona', '#BezpartyjnyBezpiecznik']
+
+ELECTION_HASHTAGS = [ '#GłosowanieKorespondencyjne', '#WyboryKorespondencyjne', '#PrzełożyćWybory', '#IdziemyNaWybory',
+                      '#Wybory2020', '#WyboryPrezydenckie2020', '#WyboryPrezydenckie', '#wybory', '#wyPAD2020']
+
+JOURNALISTS_ACCOUNTS = ['lis_tomasz', 'patrykmichalski', 'EMichalik', 'PawelWronskigw', 'DWielowieyska', 
+                                                    'sekielski', 'tzolciak', 'PatrykWachowiec', 'Renata_Grochal', 'michalkarnowski',
+                                                    'R_A_Ziemkiewicz', 'GadowskiWitold']
+
+ELECTION_KEYWORDS = ["wybory", "głosowanie", "odwołac", "przełożyć"] + CANDIDATES
+
 
