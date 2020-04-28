@@ -17,7 +17,7 @@ def index():
 
 
 @app.route("/charts/likes_rts")
-def likes_rts_chart(chart):
+def likes_rts_chart():
     return render_template('charts.html', chart='/static/charts/likes_and_rts.svg', title='Wykres Liczby polubień i reetweetów wpisów kandydatów')
 
 
