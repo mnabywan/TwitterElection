@@ -132,12 +132,15 @@ def get_tweets_by_journalist_account(api, table_name, journalist):
                     c.execute(is_tweet_in_base)
                     id_in_base = c.fetchall()
                     if not id_in_base:
-                        #author_name = tweet.author.name
+                        created_at = str(tweet.created_at)
+                        retweet_count = tweet.retweet_count
+                        favorite_count = tweet.favorite_count
+                        author_name = tweet.author.screen_name
                         print(tweet.created_at)
-                        str = "INSERT INTO journalist_tweets(tweet_id, author_name) VALUES ({}, \"{}\")"
-                        str = str.format(id, journalist)
-                        print(str)
-                        c.execute(str)
+                        str1 = "INSERT INTO journalist_tweets(tweet_id, author_name, favorite_count, retweet_count ,created_at) " \
+                               "VALUES ({}, \"{}\", {}, {}, \"{}\")"
+                        str1 = str1.format(id, author_name, favorite_count, retweet_count, created_at)
+                        c.execute(str1)
                         conn.commit()
             else:
                 end = True
@@ -221,9 +224,10 @@ def insert_accounts_data(table):
 
 if __name__ == '__main__':
     #insert_accounts_data(table="journalist_accounts")
-
+    #get_tweets_by_journalists_account_start()
+    update_tweets_data("journalist_tweets")
     #get_tweets_by_hashtag_start()
-    get_tweets_by_candidates_hashtags_start()
+    #get_tweets_by_candidates_hashtags_start()
     # update_tweets_data("candidates_tweets")
     # update_tweets_data("election_tweets")
     # tweet = api.get_status(1256274433473470465)

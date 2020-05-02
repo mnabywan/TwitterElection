@@ -33,6 +33,7 @@ JOURNALISTS_ACCOUNTS = ['lis_tomasz', 'patrykmichalski', 'EMichalik', 'PawelWron
                                                     'sekielski', 'tzolciak', 'PatrykWachowiec', 'Renata_Grochal', 'michalkarnowski',
                                                     'R_A_Ziemkiewicz', 'GadowskiWitold']
 
-ELECTION_KEYWORDS = ["wybory", "głosowanie", "odwołac", "przełożyć"] + CANDIDATES
+ELECTION_KEYWORDS = ["wybory", "prezydent", "opozycja", "głosowanie",
+                     "głos", "odwoł", "przeł", "koperta", "prezydenckie", "poczta"] + CANDIDATES
 
 
