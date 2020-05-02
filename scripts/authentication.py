@@ -9,7 +9,6 @@ try:
     access_secret = environ['TWITTER_ACCESS_SECRET']
 
 except KeyError as e:
-    raise e
     print('Error: The twitter credentials not set', file=stderr)
     exit(1)
 
