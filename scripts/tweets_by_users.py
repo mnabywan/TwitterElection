@@ -1,22 +1,53 @@
 import tweepy
 import datetime, time
 import sqlite3
-from candidates import *
-from authentication import consumer_key, consumer_secret, access_key, access_secret, auth, api
+
+from scripts.candidates import *
+from scripts.authentication import consumer_key, consumer_secret, access_key, access_secret, auth, api
 
 
-conn = sqlite3.connect('Twitter.db')
+conn = sqlite3.connect('../db/Twitter.db')
 c = conn.cursor()
 
+def select_all_tasks():
+    cur = conn.cursor()
+    cur.execute("SELECT tweet_id FROM duda_hashtags ")
 
-# table_create = """CREATE TABLE "candidates_tweets" (
-# 	"tweet_id"	INTEGER NOT NULL,
-# 	"candidate_name"	TEXT NOT NULL,
-# 	"author_name"	TEXT NOT NULL,
-# 	PRIMARY KEY("tweet_id")
-# );"""
-# c.execute(table_create)
-# conn.commit()
+    rows = cur.fetchall()
+
+    for row in rows:
+        print(row)
+
+
+def update_tweets_data(table_name):
+    select_str = "SELECT tweet_id FROM {} WHERE retweet_count IS NULL".format(table_name)
+    print(select_str)
+    cur = conn.cursor()
+    cur.execute(select_str)
+
+    tweets = cur.fetchall()
+    print(tweets)
+    for row in tweets:
+        print(row[0])
+        tweet_id = row[0]
+        try:
+            tweet = api.get_status(tweet_id)
+            created_at = str(tweet.created_at)
+            retweet_count = tweet.retweet_count
+            favorite_count = tweet.favorite_count
+            author_name = tweet.author.screen_name
+            str1 = "UPDATE \"{}\"  SET favorite_count = {}, created_at = \"{}\", retweet_count= {}, author_name = \"{}\" " \
+                   " WHERE tweet_id = \"{}\"".format(table_name, favorite_count,
+                                                     created_at, retweet_count, author_name, tweet_id)
+            print(str)
+            cur.execute(str1)
+            conn.commit()
+        except tweepy.error.TweepError:
+            pass
+
+
+
+
 
 def get_tweets_by_hashtag(api, hashtag, table_name, date_until=None, date_since=None):
     print(hashtag)
@@ -30,15 +61,19 @@ def get_tweets_by_hashtag(api, hashtag, table_name, date_until=None, date_since=
         if 'RT @' not in tweet.text:
             id = tweet.id
             is_tweet_in_base = "SELECT tweet_id from {} where tweet_id = {}".format(table_name, id)
+            #print(is_tweet_in_base)
             c.execute(is_tweet_in_base)
             id_in_base = c.fetchall()
             if not id_in_base:
-                author_name = tweet.author.name
+                created_at = str(tweet.created_at)
+                retweet_count = tweet.retweet_count
+                favorite_count = tweet.favorite_count
+                author_name = tweet.author.screen_name
                 print(tweet.created_at)
-                str = "INSERT INTO {}(tweet_id, hashtag) VALUES ({}, \"{}\")"
-                str = str.format(table_name, id, hashtag)
-                #print(str)
-                c.execute(str)
+                str1 = "INSERT INTO {}(tweet_id, hashtag, created_at, retweet_count, favorite_count, author_name) VALUES ({}, \"{}\", \"{}\", {}, {}, \"{}\" )"
+                str1 = str1.format(table_name, id, hashtag, created_at, retweet_count, favorite_count, author_name)
+                print(str)
+                c.execute(str1)
                 conn.commit()
 
 
@@ -51,20 +86,25 @@ def get_tweets_by_user(api, username, candidate):
     while True:
         tweets = api.user_timeline(username, page=page)
         for tweet in tweets:
-            if (datetime.datetime.now() - tweet.created_at).days  <= 31:
+            if (datetime.datetime.now() - tweet.created_at).days  <= 9:
                 if 'RT @' not in tweet.text:
                     ''' Handle unique  '''
                     id = tweet.id
                     is_tweet_in_base = "SELECT tweet_id from candidates_tweets where tweet_id = {}".format(id)
-                    c.execute(id_in_base)
+                    c.execute(is_tweet_in_base)
                     id_in_base = c.fetchall()
                     if not id_in_base:
-                        author_name = tweet.author.name
+                        created_at = str(tweet.created_at)
+                        retweet_count = tweet.retweet_count
+                        favorite_count = tweet.favorite_count
+                        author_name = tweet.author.screen_name
                         print(tweet.created_at)
-                        str = "INSERT INTO candidates_tweets(tweet_id, candidate_name, author_name) VALUES ({}, \"{}\", \"{}\")"
-                        str = str.format(id, candidate, author_name)
-                        print(str)
-                        c.execute(str)
+                        print(tweet.created_at)
+                        str1 = "INSERT INTO candidates_tweets(tweet_id, candidate_name, author_name, favorite_count, retweet_count ,created_at) " \
+                               "VALUES ({}, \"{}\", \"{}\", {}, {}, \"{}\")"
+                        str1 = str1.format(id, candidate, author_name, favorite_count, retweet_count, created_at)
+                        print(str1)
+                        c.execute(str1)
                         conn.commit()
             else:
                 end = True
@@ -109,8 +149,9 @@ def get_tweets_by_journalist_account(api, table_name, journalist):
 
 
 def get_tweets_by_candidates_accounts():
-    accounts_list = DUDA_ACCOUNTS + KIDAWA_ACCOUNTS + KOSINIAK_HASHTAGS \
-                    + BIEDRON_HASHTAGS + HOLOWNIA_ACCOUNTS + BOSAK_HASHTAGS
+
+    accounts_list = DUDA_ACCOUNTS + KIDAWA_ACCOUNTS +KOSINIAK_ACCOUNTS\
+                    + BIEDRON_ACCOUNTS +HOLOWNIA_ACCOUNTS + BOSAK_ACCOUNTS
     for user in accounts_list:
         if user in DUDA_ACCOUNTS:
             candidate = DUDA
@@ -131,12 +172,14 @@ def get_tweets_by_candidates_accounts():
 def get_tweets_by_hashtag_start():
     table_name = "election_tweets"
     for hashtag in ELECTION_HASHTAGS:
-        get_tweets_by_hashtag(api, hashtag, table_name=table_name, date_until="2020-04-06")
+        get_tweets_by_hashtag(api, hashtag, table_name=table_name, date_since="2020-04-25")
 
 
 def get_tweets_by_candidates_hashtags_start():
-    hashtag_list =  KIDAWA_HASHTAGS + KOSINIAK_HASHTAGS +\
+
+    hashtag_list = DUDA_HASHTAGS + KIDAWA_HASHTAGS + KOSINIAK_HASHTAGS + \
                     BIEDRON_HASHTAGS + HOLOWNIA_HASHTAGS + BOSAK_HASHTAGS
+
     for hashtag in hashtag_list:
         if hashtag in DUDA_HASHTAGS:
             table_name = "duda_hashtags"
@@ -150,23 +193,39 @@ def get_tweets_by_candidates_hashtags_start():
             table_name = "holownia_hashtags"
         elif hashtag in BOSAK_HASHTAGS:
             table_name = "bosak_hashtags"
-        get_tweets_by_hashtag(api, hashtag, table_name=table_name, date_until="2020-04-05")
-
-
+        get_tweets_by_hashtag(api, hashtag, table_name=table_name,  date_since="2020-04-25")
 
 def get_tweets_by_journalists_account_start():
     table_name = "journalist_tweets"
     for journalist in JOURNALISTS_ACCOUNTS:
         get_tweets_by_journalist_account(api, table_name, journalist)
 
+
+def insert_accounts_data(table):
+    accounts_list = DUDA_ACCOUNTS + KIDAWA_ACCOUNTS + KOSINIAK_ACCOUNTS \
+                     + BIEDRON_ACCOUNTS + HOLOWNIA_ACCOUNTS + BOSAK_ACCOUNTS
+    for account in JOURNALISTS_ACCOUNTS:
+        user = api.get_user(account)
+        created_at = str(user.created_at)
+        followers_count = user.followers_count
+        statuses_count = user.statuses_count
+        favourites_count = user.favourites_count
+        friends_count = user.friends_count
+        str1 = "INSERT INTO \"{}\"(account, created_at, followers_count, statuses_count, favourites_count, friends_count)" \
+               " VALUES (\"{}\", \"{}\", {}, {}, {}, {})"
+        str1 = str1.format(table, account, created_at, followers_count, statuses_count, favourites_count, friends_count)
+        print(str1)
+        c.execute(str1)
+        conn.commit()
+
+
 if __name__ == '__main__':
-    t = api.get_status(1248538479048491008)
-    print(t.text)
-    print(t.author)
-    print(t.author.screen_name)
+    #insert_accounts_data(table="journalist_accounts")
+
     #get_tweets_by_hashtag_start()
-    #get_tweets_by_candidates_hashtags_start()
-    get_tweets_by_journalists_account_start()
-
-
-
+    get_tweets_by_candidates_hashtags_start()
+    # update_tweets_data("candidates_tweets")
+    # update_tweets_data("election_tweets")
+    # tweet = api.get_status(1256274433473470465)
+    # print(tweet.text)
+    # # print(tweet.text)

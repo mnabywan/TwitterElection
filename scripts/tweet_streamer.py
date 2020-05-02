@@ -2,7 +2,7 @@ import sys
 import tweepy
 import json
 import sqlite3
-import authentication
+import scripts.authentication as authentication
 
 elections_hashtags = ["#wybory2020", "#WyboryPrezydenckie2020", "#wybory", "#PrzełożyćWybory",
                       "#IdziemyNaWybory", "#idźnawybory", "#GłosowanieKorespondencyjne", "#wyPAD2020"]
