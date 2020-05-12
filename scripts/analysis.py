@@ -3,6 +3,7 @@ from pandas import DataFrame
 import sqlite3
 import matplotlib.pyplot as plt
 from time import sleep
+from os import environ
 
 #TODO: rename this function
 def candidate_sum(table, conn):
@@ -44,6 +45,29 @@ def save_candidate_tweets(conn, candidates, outfile='server/static/charts/candid
     plt.tight_layout()
     plt.savefig(outfile)
 
+def authenticate():
+    from authentication import api
+    return api
+
+def save_candidate_followers_and_friends(outfile1='server/static/charts/followers.svg', outfile2='server/static/charts/friends.svg'):
+    diction=[]
+    twitter = authenticate()
+    for c in ['AndrzejDuda', 'M_K_Blonska', 'RobertBiedron', 'KosiniakKamysz', 'krzysztofbosak', 'szymon_holownia']:
+        tweet = twitter.get_user(c)
+        user={'candidate':c,"follower_count":tweet._json['followers_count'],"friends_count":tweet._json['friends_count']}
+        diction.append(user)
+
+    df5=pd.DataFrame(diction)
+    df5.sort_values(by=['follower_count'], inplace=True, ascending=False)
+    df5.plot(x="candidate", y=["follower_count"], kind="bar")
+    plt.tight_layout()
+    plt.savefig(outfile1)
+
+    df5.sort_values(by=['friends_count'], inplace=True, ascending=False)
+    df5.plot(x="candidate", y=["friends_count"], kind="bar")
+    plt.tight_layout()
+    plt.savefig(outfile2)
+
 if __name__ == '__main__':
     conn = sqlite3.connect('db/Twitter.db')
     cur = conn.cursor() 
@@ -61,5 +85,6 @@ if __name__ == '__main__':
         "Kidawa":'kidawa_hashtags',
         "Kosiniak":'kosiniak_hashtags'
     }
-    save_likes_and_rts(conn, candidates)
-    save_candidate_tweets(conn, candidates)
+    # save_likes_and_rts(conn, candidates)
+    # save_candidate_tweets(conn, candidates)
+    save_candidate_followers_and_friends()

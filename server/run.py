@@ -24,6 +24,14 @@ def likes_rts_chart():
 def candidate_tweets_chart():
     return render_template('charts.html', chart='/static/charts/candidate_tweets.svg', title='Wykres liczby tweetów napisanych przez każdego kandydata')
 
+@app.route("/charts/followers")
+def followers_chart():
+    return render_template('charts.html', chart='/static/charts/followers.svg', title='Liczba obserwujących każdego kandydata')
+
+@app.route("/charts/friends")
+def friends_chart():
+    return render_template('charts.html', chart='/static/charts/friends.svg', title='Liczba przyjaciół każdego kandydata')
+
 
 if __name__ == '__main__':
     app.run(debug=True)
