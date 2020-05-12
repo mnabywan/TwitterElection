@@ -20,6 +20,9 @@ def index():
 def likes_rts_chart():
     return render_template('charts.html', chart='/static/charts/likes_and_rts.svg', title='Wykres Liczby polubień i reetweetów wpisów kandydatów')
 
+@app.route("/charts/candidate_tweets")
+def candidate_tweets_chart():
+    return render_template('charts.html', chart='/static/charts/candidate_tweets.svg', title='Wykres liczby tweetów napisanych przez każdego kandydata')
 
 
 if __name__ == '__main__':
