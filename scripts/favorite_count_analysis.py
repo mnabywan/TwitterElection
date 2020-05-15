@@ -3,20 +3,6 @@ import matplotlib.pyplot as plt
 from datetime import datetime
 import sqlite3
 
-# sdate = '16-02-2018'
-# edate = '27-02-2018'
-# pd.date_range(sdate,edate-timedelta(days=1),freq='d')
-#
-#
-# dates = ['2015-12-20','2015-09-12']
-# PM_25 = [80, 55]
-# dates = [pd.to_datetime(d) for d in dates]
-#
-# plt.plot_date(dates, PM_25, c = 'red')
-# plt.show()
-
-
-
 
 from datetime import date, timedelta
 
