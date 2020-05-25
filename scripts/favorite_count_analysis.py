@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from datetime import datetime
 import sqlite3
+from matplotlib.pyplot import figure
 import numpy as np
 
 from datetime import date, timedelta
@@ -64,6 +65,8 @@ candidates = {
     "Kosiniak": kosiniak_tweets
 }
 
+
+
 days_list = []
 
 for i in range(delta.days + 1):
@@ -82,7 +85,7 @@ for candidate in candidates.keys():
 
 dates = [pd.to_datetime(d) for d in days_list]
 
-
+outfile = "../charts/favorite_count.png"
 for item in candidates.keys():
     fav_list = candidates.get(item)['Favorite count']
     count_list = candidates.get(item)['Count']
@@ -94,9 +97,15 @@ for item in candidates.keys():
     plt.plot(dates, fav_list, label=item, )
 
 
-plt.legend()
+plt.legend(loc=2) #upper left
+fig = plt.gcf()
+fig.set_size_inches(10, 5)
+plt.savefig(fname=outfile)
 plt.show()
 plt.close()
+
+
+outfile = outfile = "../charts/tweets_count.png"
 
 for item in candidates.keys():
     fav_list = candidates.get(item)['Favorite count']
@@ -109,9 +118,14 @@ for item in candidates.keys():
     plt.title("Number of tweets for date for accounts connected to each candidate ")
     plt.plot(dates, count_list, label=item )
 
-plt.legend()
+plt.legend(loc=2)
+fig = plt.gcf()
+fig.set_size_inches(10, 5)
+plt.savefig(fname=outfile, )
 plt.show()
 plt.close()
+
+outfile = "../charts/retweet_count.png"
 
 for item in candidates.keys():
     fav_list = candidates.get(item)['Favorite count']
@@ -125,17 +139,25 @@ for item in candidates.keys():
     plt.plot(dates, retweet_list, label=item,)
 
 
-plt.legend()
+plt.legend(loc=2)
+fig = plt.gcf()
+fig.set_size_inches(10, 5)
+# plt.figure(figsize=(8,4))
+plt.savefig(fname=outfile)
 plt.show()
 plt.close()
 
+print("Candidate " + "Avg tweets count   " + "Avg favorites count   " + "Avg retweets count")
 
-for c in candidates:
-    print(c)
+for c in candidates.keys():
     df = pd.DataFrame(candidates.get(c))
-    print((df['Count']).mean())
+    count_mean = int((df['Count']).mean())
+    favorite_mean = int((df['Favorite count']).mean())
+    retweet_mean = int((df['Retweet count']).mean())
+
+    print( (c) + "     " + str(count_mean) + "     " + str(favorite_mean) + \
+    "  " + str(retweet_mean))
 
 
-def get_mean(candidate):
-    pass
+
 
