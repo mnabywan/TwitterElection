@@ -85,7 +85,7 @@ for candidate in candidates.keys():
 
 dates = [pd.to_datetime(d) for d in days_list]
 
-outfile = "../charts/favorite_count.png"
+outfile = "../server/static/charts/favourite_count.svg"
 for item in candidates.keys():
     fav_list = candidates.get(item)['Favorite count']
     count_list = candidates.get(item)['Count']
@@ -105,7 +105,7 @@ plt.show()
 plt.close()
 
 
-outfile = outfile = "../charts/tweets_count.png"
+outfile = outfile = "../server/static/charts/tweets_count.svg"
 
 for item in candidates.keys():
     fav_list = candidates.get(item)['Favorite count']
@@ -125,7 +125,7 @@ plt.savefig(fname=outfile, )
 plt.show()
 plt.close()
 
-outfile = "../charts/retweet_count.png"
+outfile = "../server/static/charts/retweet_count.svg"
 
 for item in candidates.keys():
     fav_list = candidates.get(item)['Favorite count']
