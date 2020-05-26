@@ -33,5 +33,18 @@ def friends_chart():
     return render_template('charts.html', chart='/static/charts/friends.svg', title='Liczba przyjaciół każdego kandydata')
 
 
+@app.route("/charts/retweet_count")
+def retweet_count():
+    return render_template('charts.html', chart='/static/charts/retweet_count.svg', title='Liczba retweetów zsumowana wg dat dla wszystkich kont kandydatów')
+
+
+@app.route("/charts/tweet_count")
+def tweet_count():
+    return render_template('charts.html', chart='/static/charts/tweets_count.svg', title='Liczba tweetów zsumowana wg dat dla wszystkich kont kandydatów')
+
+@app.route("/charts/favourite_count")
+def favourite_count():
+    return render_template('charts.html', chart='/static/charts/favourite_count.svg', title='Liczba tweetów zsumowana wg dat dla wszystkich kont kandydatów')
+
 if __name__ == '__main__':
     app.run(debug=True)
