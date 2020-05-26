@@ -46,5 +46,29 @@ def tweet_count():
 def favourite_count():
     return render_template('charts.html', chart='/static/charts/favourite_count.svg', title='Liczba tweetów zsumowana wg dat dla wszystkich kont kandydatów')
 
+@app.route("/wordclouds/biedron")
+def biedron_wordcloud():
+    return render_template('charts.html', chart='/static/wordclouds/Biedron_tweet.png', title='Wordcloud - Biedron')
+
+@app.route("/wordclouds/bosak")
+def bosak_wordcloud():
+    return render_template('charts.html', chart='/static/wordclouds/Bosak_tweet.png', title='Wordcloud - Bosak')
+
+@app.route("/wordclouds/duda")
+def duda_wordcloud():
+    return render_template('charts.html', chart='/static/wordclouds/Duda_tweet.png', title='Wordcloud - Duda')
+
+@app.route("/wordclouds/holownia")
+def holownia_wordcloud():
+    return render_template('charts.html', chart='/static/wordclouds/Holownia_tweet.png', title='Wordcloud - Holownia')
+
+@app.route("/wordclouds/kidawa")
+def kidawa_wordcloud():
+    return render_template('charts.html', chart='/static/wordclouds/Kidawa_tweet.png', title='Wordcloud - Kidawa')
+
+@app.route("/wordclouds/kosiniak")
+def kosiniak_wordcloud():
+    return render_template('charts.html', chart='/static/wordclouds/Kosiniak_tweet.png', title='Wordcloud - Kosiniak')
+
 if __name__ == '__main__':
     app.run(debug=True)
