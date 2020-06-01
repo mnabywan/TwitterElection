@@ -17,6 +17,18 @@ def validate_candidate(candidate):
     return False
 
 
+def validate_graph(graph):
+    possible_graphs = [
+        'betweenness centrality', 
+        'closeness centrality', 
+        'degree centrality', 
+        'eigenvector centrality',
+        'info',
+        'pagerank',
+        'hashtags'
+    ]
+    return graph in possible_graphs
+
 
 @app.route("/")
 def index():
@@ -157,21 +169,13 @@ def tweets_count(candidate):
 
 @app.route("/graphs/<graph>/<candidate>")
 def graph(graph, candidate):
-    possible_graphs = [
-        'betweenness centrality', 
-        'closeness centrality', 
-        'degree centrality', 
-        'eigenvector centrality',
-        'info',
-        'pagerank',
-        'hashtags'
-    ]
-    if graph in possible_graphs:
+    if validate_graph(graph):
         if validate_candidate(candidate):
             title = f'{graph.capitalize()} - {candidate.capitalize()}'
-            chart = f'/static/graphs/{candidate}_graph_{graph}.png'
             if graph == 'hashtags':
                 chart = f'/static/graphs/{candidate}_{graph}.png'
+            else:
+                chart = f'/static/graphs/{candidate}_graph_{graph}.png'
             return render_template('graphs.html', chart=chart, title=title)
         else:
             return 'Invalid candidate', 404
