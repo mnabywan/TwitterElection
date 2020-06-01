@@ -119,8 +119,8 @@ def general_analysis(graph, subgraph, name):
     lines.append(f'Average distance between two nodes: {nx.average_shortest_path_length(graph):.2f}')
     info = '\n'.join(lines)
     fig = plt.figure()
-    plt.axis([0, 15, 0, 15])
-    plt.text(1, 13.5, info, fontsize=11, ha='left', va='top', wrap=True)
+    plt.axis([0, 15, 0, 16])
+    plt.text(1, 15, info, fontsize=11, ha='left', va='top', wrap=True)
     plt.xticks([])
     plt.yticks([])
     plt.savefig(f'graphs\\{name}_graph_info.png')
@@ -133,6 +133,7 @@ def print_general_info(graph, lines):
     degrees = [val for (node, val) in graph.degree()]
     lines.append(f'Max degree: {np.max(degrees)}')
     lines.append(f'Min degree: {np.min(degrees)}')
+    lines.append(f'Density: {nx.density(graph)}')
 
 
 def centrality(graph, name):
