@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Twitter Election</title>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="#">Twitter Election</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
@@ -108,18 +108,88 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-             Liczby tweetów
+              Betweenness centrality
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" href="/charts/tweets_count/all"><b>Razem</b></a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/charts/tweets_count/biedron">Biedron</a>
-              <a class="dropdown-item" href="/charts/tweets_count/bosak">Bosak</a>
-              <a class="dropdown-item" href="/charts/tweets_count/duda">Duda</a>
-              <a class="dropdown-item" href="/charts/tweets_count/holownia">Holownia</a>
-              <a class="dropdown-item" href="/charts/tweets_count/kidawa">Kidawa</a>
-              <a class="dropdown-item" href="/charts/tweets_count/kosiniak">Kosiniak</a>
-        </li>
+              <a class="dropdown-item" href="/graphs/betweenness centrality/biedron">Biedron</a>
+              <a class="dropdown-item" href="/graphs/betweenness centrality/bosak">Bosak</a>
+              <a class="dropdown-item" href="/graphs/betweenness centrality/duda">Duda</a>
+              <a class="dropdown-item" href="/graphs/betweenness centrality/holownia">Holownia</a>
+              <a class="dropdown-item" href="/graphs/betweenness centrality/kidawa">Kidawa</a>
+              <a class="dropdown-item" href="/graphs/betweenness centrality/kosiniak">Kosiniak</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Closeness centrality
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/graphs/closeness centrality/biedron">Biedron</a>
+              <a class="dropdown-item" href="/graphs/closeness centrality/bosak">Bosak</a>
+              <a class="dropdown-item" href="/graphs/closeness centrality/duda">Duda</a>
+              <a class="dropdown-item" href="/graphs/closeness centrality/holownia">Holownia</a>
+              <a class="dropdown-item" href="/graphs/closeness centrality/kidawa">Kidawa</a>
+              <a class="dropdown-item" href="/graphs/closeness centrality/kosiniak">Kosiniak</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Degree centrality
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/graphs/degree centrality/biedron">Biedron</a>
+              <a class="dropdown-item" href="/graphs/degree centrality/bosak">Bosak</a>
+              <a class="dropdown-item" href="/graphs/degree centrality/duda">Duda</a>
+              <a class="dropdown-item" href="/graphs/degree centrality/holownia">Holownia</a>
+              <a class="dropdown-item" href="/graphs/degree centrality/kidawa">Kidawa</a>
+              <a class="dropdown-item" href="/graphs/degree centrality/kosiniak">Kosiniak</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Eigenvector centrality
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/graphs/eigenvector centrality/biedron">Biedron</a>
+              <a class="dropdown-item" href="/graphs/eigenvector centrality/bosak">Bosak</a>
+              <a class="dropdown-item" href="/graphs/eigenvector centrality/duda">Duda</a>
+              <a class="dropdown-item" href="/graphs/eigenvector centrality/holownia">Holownia</a>
+              <a class="dropdown-item" href="/graphs/eigenvector centrality/kidawa">Kidawa</a>
+              <a class="dropdown-item" href="/graphs/eigenvector centrality/kosiniak">Kosiniak</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Graph info
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/graphs/info/biedron">Biedron</a>
+              <a class="dropdown-item" href="/graphs/info/bosak">Bosak</a>
+              <a class="dropdown-item" href="/graphs/info/duda">Duda</a>
+              <a class="dropdown-item" href="/graphs/info/holownia">Holownia</a>
+              <a class="dropdown-item" href="/graphs/info/kidawa">Kidawa</a>
+              <a class="dropdown-item" href="/graphs/info/kosiniak">Kosiniak</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Pagerank
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/graphs/pagerank/biedron">Biedron</a>
+              <a class="dropdown-item" href="/graphs/pagerank/bosak">Bosak</a>
+              <a class="dropdown-item" href="/graphs/pagerank/duda">Duda</a>
+              <a class="dropdown-item" href="/graphs/pagerank/holownia">Holownia</a>
+              <a class="dropdown-item" href="/graphs/pagerank/kidawa">Kidawa</a>
+              <a class="dropdown-item" href="/graphs/pagerank/kosiniak">Kosiniak</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Hashtag graphs
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/graphs/hashtags/biedron">Biedron</a>
+              <a class="dropdown-item" href="/graphs/hashtags/bosak">Bosak</a>
+              <a class="dropdown-item" href="/graphs/hashtags/duda">Duda</a>
+              <a class="dropdown-item" href="/graphs/hashtags/holownia">Holownia</a>
+              <a class="dropdown-item" href="/graphs/hashtags/kidawa">Kidawa</a>
+              <a class="dropdown-item" href="/graphs/hashtags/kosiniak">Kosiniak</a>
+          </li>           
             <!-- <li class="nav-item">
               <a class="nav-link disabled" href="#">Disabled</a>
             </li> -->
