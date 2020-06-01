@@ -120,5 +120,16 @@ def tags(candidate):
     else:
         return 'Invalid candidate', 404
 
+@app.route("/charts/replies/<candidate>")
+def replies(candidate):
+    if validate_candidate(candidate) or candidate == 'all':
+        candidate = candidate.capitalize()
+        title = f'Ilość odpowiedzi - {candidate}'
+        if candidate == 'All':
+            title = 'Ilość odpowiedzi - wszyscy kandydaci'
+        return render_template('charts.html', chart=f'/static/charts/replies/{candidate}_replies.png', title=title)
+    else:
+        return 'Invalid candidate', 404
+
 if __name__ == '__main__':
     app.run(debug=True)
