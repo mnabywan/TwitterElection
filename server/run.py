@@ -46,29 +46,33 @@ def tweet_count():
 def favourite_count():
     return render_template('charts.html', chart='/static/charts/favourite_count.svg', title='Liczba tweetów zsumowana wg dat dla wszystkich kont kandydatów')
 
-@app.route("/wordclouds/biedron")
+@app.route("/wordclouds/biedron_words")
 def biedron_wordcloud():
-    return render_template('charts.html', chart='/static/wordclouds/Biedron_tweet.png', title='Wordcloud - Biedron')
+    return render_template('charts.html', chart='/static/wordclouds/words/Biedron_common_words.png', title='Wordcloud - Biedron')
 
-@app.route("/wordclouds/bosak")
+@app.route("/wordclouds/bosak_words")
 def bosak_wordcloud():
-    return render_template('charts.html', chart='/static/wordclouds/Bosak_tweet.png', title='Wordcloud - Bosak')
+    return render_template('charts.html', chart='/static/wordclouds/words/Bosak_common_words.png', title='Wordcloud - Bosak')
 
-@app.route("/wordclouds/duda")
+@app.route("/wordclouds/duda_words")
 def duda_wordcloud():
-    return render_template('charts.html', chart='/static/wordclouds/Duda_tweet.png', title='Wordcloud - Duda')
+    return render_template('charts.html', chart='/static/wordclouds/words/Duda_common_words.png', title='Wordcloud - Duda')
 
-@app.route("/wordclouds/holownia")
+@app.route("/wordclouds/holownia_words")
 def holownia_wordcloud():
-    return render_template('charts.html', chart='/static/wordclouds/Holownia_tweet.png', title='Wordcloud - Holownia')
+    return render_template('charts.html', chart='/static/wordclouds/words/Holownia_common_words.png', title='Wordcloud - Holownia')
 
-@app.route("/wordclouds/kidawa")
+@app.route("/wordclouds/kidawa_words")
 def kidawa_wordcloud():
-    return render_template('charts.html', chart='/static/wordclouds/Kidawa_tweet.png', title='Wordcloud - Kidawa')
+    return render_template('charts.html', chart='/static/wordclouds/words/Kidawa_common_words.png', title='Wordcloud - Kidawa')
 
-@app.route("/wordclouds/kosiniak")
+@app.route("/wordclouds/kosiniak_words")
 def kosiniak_wordcloud():
-    return render_template('charts.html', chart='/static/wordclouds/Kosiniak_tweet.png', title='Wordcloud - Kosiniak')
+    return render_template('charts.html', chart='/static/wordclouds/words/Kosiniak_common_words.png', title='Wordcloud - Kosiniak')
+
+@app.route("/wordclouds/all_words")
+def all_wordcloud():
+    return render_template('charts.html', chart='/static/wordclouds/words/all_common_words.png', title='Wordcloud - wszystkie słowa')
 
 if __name__ == '__main__':
     app.run(debug=True)
