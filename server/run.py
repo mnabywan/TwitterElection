@@ -142,5 +142,18 @@ def common_words(candidate):
     else:
         return 'Invalid candidate', 404
 
+@app.route("/charts/tweets_count/<candidate>")
+def tweets_count(candidate):
+    if validate_candidate(candidate) or candidate == 'all':
+        candidate = candidate.capitalize()
+        title = f'Liczba tweetów - {candidate}'
+        candidate = '_' + candidate
+        if candidate == '_All':
+            candidate = ''
+            title = 'Liczba tweetów - wszyscy kandydaci'
+        return render_template('charts.html', chart=f'/static/charts/tweets_count/tweets_count{candidate}.png', title=title)
+    else:
+        return 'Invalid candidate', 404
+
 if __name__ == '__main__':
     app.run(debug=True)
