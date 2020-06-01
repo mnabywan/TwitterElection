@@ -100,20 +100,19 @@ def get_chart_for_candidate(candidate, candidate_dict, sdate, edate, delta, cand
                 account.get('Count').append(0)
                 account.get('Retweet count').append(0)
                 account.get('Favorite count').append(0)
-    
+
         for index, row in df.iterrows():
-            print(row['author_name'])
             candidate_acc = candidates.get(candidate)[row['author_name']]
             candidate_acc.get('Author').append(row['author_name'])
             candidate_acc.get('Day').append(day)
             candidate_acc.get('Count').append(row['count'])
             candidate_acc.get('Retweet count').append(row['retweets'])
             candidate_acc.get('Favorite count').append(row['favorites'])
-    
-    
-    dates = [pd.to_datetime(d) for d in days_list]
 
-    outfile = "../server/static/charts/tweets_count_" + candidate + ".svg"
+
+    dates = [pd.to_datetime(d) for d in days_list]
+    #
+    outfile = "../server/static/charts/tweets_count_" + candidate + ".png"
     for i in range(0, len(candidate_accounts)):
         count_list = candidate_dict[candidate_accounts[i]].get('Count')
         fav_list = candidate_dict[candidate_accounts[i]].get('Favorite count')
@@ -133,7 +132,7 @@ def get_chart_for_candidate(candidate, candidate_dict, sdate, edate, delta, cand
     plt.close()
 
     #Plotting chart
-    outfile = "../server/static/charts/favourite_count_"+ candidate + ".svg"
+    outfile = "../charts/favourite_count_"+ candidate + ".png"
     for i in range(0, len(candidate_accounts)):
         count_list = candidate_dict[candidate_accounts[i]].get('Count')
         fav_list = candidate_dict[candidate_accounts[i]].get('Favorite count')
@@ -153,7 +152,7 @@ def get_chart_for_candidate(candidate, candidate_dict, sdate, edate, delta, cand
     plt.close()
 
     # Plotting retweets chart
-    outfile = "../server/static/charts/retweets_count_" + candidate + ".svg"
+    outfile = "../charts/retweets_count_" + candidate + ".png"
     for i in range(0, len(candidate_accounts)):
         count_list = candidate_dict[candidate_accounts[i]].get('Count')
         fav_list = candidate_dict[candidate_accounts[i]].get('Favorite count')
@@ -171,6 +170,26 @@ def get_chart_for_candidate(candidate, candidate_dict, sdate, edate, delta, cand
     plt.savefig(fname=outfile, )
     plt.show()
     plt.close()
+
+    print("{: >20} {: >20} {: >20} {: >20} {: >20} {: >20}".format("Candidate", "Avg tweets/day", "Avg favorites/day ", "Avg retweets/day", "Avg favorites/tweet", "Avg retweets/tweet"))
+
+    for c in candidate_dict.keys():
+        df = pd.DataFrame(candidate_dict.get(c))
+        #
+        count_mean = round(float((df['Count']).mean()), 1)
+        favorite_mean = int((df['Favorite count']).mean())
+        retweet_mean = int((df['Retweet count']).mean())
+        if count_mean == 0:
+            favorite_per_tweet = 0
+            rt_per_tweet = 0
+        else:
+            favorite_per_tweet = int (favorite_mean/count_mean)
+            rt_per_tweet = int(retweet_mean / count_mean)
+
+        #
+        print("{: >20} {: >20} {: >20} {: >20} {: >20} {: >20}".format(c, count_mean, favorite_mean, retweet_mean, favorite_per_tweet, rt_per_tweet))
+    print("\n")
+
 
 
 if __name__ == '__main__':
