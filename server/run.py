@@ -131,5 +131,16 @@ def replies(candidate):
     else:
         return 'Invalid candidate', 404
 
+@app.route("/charts/common_words/<candidate>")
+def common_words(candidate):
+    if validate_candidate(candidate) or candidate == 'all':
+        candidate = candidate.capitalize()
+        title = f'Najpopularniejsze słowa - {candidate}'
+        if candidate == 'All':
+            title = 'Najpopularniejsze słowa - wszyscy kandydaci'
+        return render_template('charts.html', chart=f'/static/charts/common_words/{candidate}_common_words.png', title=title)
+    else:
+        return 'Invalid candidate', 404
+
 if __name__ == '__main__':
     app.run(debug=True)
