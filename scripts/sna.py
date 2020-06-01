@@ -104,53 +104,65 @@ def get_relations(row):
     return user, relations
 
 
-def general_analysis(graph, subgraph):
-    print_general_info(graph)
-    print(f'Graph connected: {nx.is_connected(graph)}')
-    print(f'Number of connected components: {nx.number_connected_components(graph)}')
+def general_analysis(graph, subgraph, name):
+    lines = []
+    print_general_info(graph, lines)
+    lines.append(f'Graph connected: {nx.is_connected(graph)}')
+    lines.append(f'Number of connected components: {nx.number_connected_components(graph)}')
     if not nx.is_connected(graph):
         graph = subgraph
-        print('Largest connected component:')
-        print_general_info(graph)
-    print(f'Average clustering coefficient: {nx.average_clustering(graph)}')
-    print(f'Transitivity: {nx.transitivity(graph)}')
-    print(f'Diameter: {nx.diameter(graph)}')
-    print(f'Average distance between two nodes: {nx.average_shortest_path_length(graph):.2f}')
+        lines.append('Largest connected component:')
+        print_general_info(graph, lines)
+    lines.append(f'Average clustering coefficient: {nx.average_clustering(graph)}')
+    lines.append(f'Transitivity: {nx.transitivity(graph)}')
+    lines.append(f'Diameter: {nx.diameter(graph)}')
+    lines.append(f'Average distance between two nodes: {nx.average_shortest_path_length(graph):.2f}')
+    info = '\n'.join(lines)
+    fig = plt.figure()
+    plt.axis([0, 15, 0, 15])
+    plt.text(1, 13.5, info, fontsize=11, ha='left', va='top', wrap=True)
+    plt.xticks([])
+    plt.yticks([])
+    plt.savefig(f'graphs\\{name}_graph_info.png')
+    plt.show()
 
 
-def print_general_info(graph):
-    print(f'Number of nodes: {graph.number_of_nodes()}')
-    print(f'Number of edges: {graph.number_of_edges()}')
+def print_general_info(graph, lines):
+    lines.append(f'Number of nodes: {graph.number_of_nodes()}')
+    lines.append(f'Number of edges: {graph.number_of_edges()}')
     degrees = [val for (node, val) in graph.degree()]
-    print(f'Max degree: {np.max(degrees)}')
-    print(f'Min degree: {np.min(degrees)}')
-    print(f'Density: {nx.density(graph)}')
+    lines.append(f'Max degree: {np.max(degrees)}')
+    lines.append(f'Min degree: {np.min(degrees)}')
 
 
-def centrality(graph):
+def centrality(graph, name):
     degree = nx.degree_centrality(graph)
     closeness = nx.closeness_centrality(graph)
     betweenness = nx.betweenness_centrality(graph, normalized=True, endpoints=False)
     eigenvector = nx.eigenvector_centrality(graph)
     pagerank = nx.pagerank(graph)
-    max_degree = get_and_print_central_nodes(graph, degree, 'degree centrality')
-    max_closeness = get_and_print_central_nodes(graph, closeness, 'closeness centrality')
-    max_betweenness = get_and_print_central_nodes(graph, betweenness, 'betweenness centrality')
-    max_eigenvector = get_and_print_central_nodes(graph, eigenvector, 'eigenvector centrality')
-    max_pagerank = get_and_print_central_nodes(graph, pagerank, 'pagerank')
+    max_degree = get_and_print_central_nodes(graph, degree, 'degree centrality', name)
+    max_closeness = get_and_print_central_nodes(graph, closeness, 'closeness centrality', name)
+    max_betweenness = get_and_print_central_nodes(graph, betweenness, 'betweenness centrality', name)
+    max_eigenvector = get_and_print_central_nodes(graph, eigenvector, 'eigenvector centrality', name)
+    max_pagerank = get_and_print_central_nodes(graph, pagerank, 'pagerank', name)
     return [max_degree, max_closeness, max_betweenness, max_eigenvector, max_pagerank], betweenness
 
 
-def get_and_print_central_nodes(graph, central_dict, metric):
+def get_and_print_central_nodes(graph, central_dict, metric, name):
     sorted_list = sorted(central_dict.items(), key=itemgetter(1), reverse=True)
-    print(f'Max {metric}:')
+    lines = [f'Max {metric}:']
     for node, value in sorted_list[:10]:
         user = graph.nodes[node]['name']
-        print(f'\t user: {user}\t value: {value}')
+        lines.append(f' user: {user}    value: {value}')
+    lines.append("")
     values = [value for name, value in reversed(sorted_list)]
+    desc = '\n'.join(lines)
     plt.hist(values, bins=100)
     plt.ylabel('number')
     plt.xlabel(metric)
+    plt.title(desc, loc='left')
+    plt.savefig(f'graphs\\{name}_graph_{metric}.png', bbox_inches='tight')
     plt.show()
     return sorted_list[0][0]
 
@@ -209,8 +221,8 @@ def sna_hashtags(path, name, outfile, date_from='2020-03-01', date_to='2020-06-1
     df = load_data(path, date_from, date_to)
     df = prepare_data(df)
     graph, subgraph = create_graph(df)
-    general_analysis(graph, subgraph)
-    central_list, betweenness = centrality(subgraph)
+    general_analysis(graph, subgraph, name)
+    central_list, betweenness = centrality(subgraph, name)
     draw_hashtags_graph(subgraph, central_list, name, outfile)
 
 
@@ -218,7 +230,7 @@ def sna_candidates(path, outfile1, outfile2, date_from='2020-03-01', date_to='20
     df = load_data(path, date_from, date_to)
     df = prepare_data(df)
     graph, subgraph = create_graph(df)
-    general_analysis(graph, subgraph)
-    central_list, betweenness = centrality(subgraph)
+    general_analysis(graph, subgraph, 'candidates')
+    central_list, betweenness = centrality(subgraph, 'candidates')
     draw_candidates_graph(subgraph, betweenness, outfile1)
     draw_graph_with_cat_colors(graph, 'candidate', betweenness, outfile2)
