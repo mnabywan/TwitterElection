@@ -144,6 +144,5 @@ media
 passwd.sh
 
 # no point in uploading new svg charts every commit
-*.svg
 
 *.ipynb
