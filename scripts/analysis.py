@@ -85,6 +85,6 @@ if __name__ == '__main__':
         "Kidawa":'kidawa_hashtags',
         "Kosiniak":'kosiniak_hashtags'
     }
-    # save_likes_and_rts(conn, candidates)
-    # save_candidate_tweets(conn, candidates)
+    save_likes_and_rts(conn, candidates)
+    save_candidate_tweets(conn, candidates)
     save_candidate_followers_and_friends()
