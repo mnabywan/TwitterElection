@@ -138,6 +138,7 @@ def replies(candidate):
         candidate = candidate.capitalize()
         title = f'Ilość odpowiedzi - {candidate}'
         if candidate == 'All':
+            candidate = 'all'
             title = 'Ilość odpowiedzi - wszyscy kandydaci'
         return render_template('charts.html', chart=f'/static/charts/replies/{candidate}_replies.png', title=title)
     else:
